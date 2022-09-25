@@ -29,21 +29,37 @@ using namespace std;
 #define ss second
 #define fast_cin() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
 
-ll INF = 1e9+7;
+vector<string> st;
 
 void solve() {
-    ll n, k;
-    cin >> n >> k;
-
-    ll p = 1;
-    ll ans = 0;
-    fin(i, 32) {
-        if(k&(1<<i)) ans = (ans+p)%INF;
-        p *= n;
-        p %= INF;
+    string s;
+    cin >> s;
+    
+    if(s == "pwd") {
+        cout << "/";
+        for(string str: st) cout << str << "/";
+        cout << endl;
+    } else {
+        cin >> s;
+        int i = 0;
+        if(s[i] == '/') {
+            st.clear();
+            i++;
+        }
+        while(i < s.size()) {
+            if(s[i] == '.') {
+                st.pop_back();
+                i+=2;
+            } else if(s[i] == '/') {
+                i++;
+            } else {
+                int j = i;
+                while(i<s.size() && s[i] != '/') i++;
+                st.push_back(s.substr(j, i-j));
+            }
+        }
     }
-
-    cout << ans << endl;
+    
 }
 
 int main() {

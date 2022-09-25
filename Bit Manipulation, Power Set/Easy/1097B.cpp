@@ -29,28 +29,34 @@ using namespace std;
 #define ss second
 #define fast_cin() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
 
-ll INF = 1e9+7;
-
 void solve() {
-    ll n, k;
-    cin >> n >> k;
+    int n;
+    cin >> n;
+    vi a(n);
+    fin(i, n) cin >> a[i];
 
-    ll p = 1;
-    ll ans = 0;
-    fin(i, 32) {
-        if(k&(1<<i)) ans = (ans+p)%INF;
-        p *= n;
-        p %= INF;
+    int ans = 0;
+    fin(i, (1<<n)) {
+        int x = 0;
+        fin(j, n) {
+            if((i>>j)&1) x+=a[j];
+            else x-=a[j];
+        }
+
+        if(!(x%360)) {
+            cout << "YES" << endl;
+            return;
+        }
     }
 
-    cout << ans << endl;
+    cout << "NO" << endl;
 }
 
 int main() {
     fast_cin();
 
     int t = 1;
-    cin >> t;
+    // cin >> t;
 
     while (t--) {
         solve();
